@@ -15,6 +15,11 @@
     },
     "price": {
       "type": "number"
+    },
+    "Orderid": {
+      "type": "string",
+      "id": true,
+      "required": true
     }
   },
   "validations": [],

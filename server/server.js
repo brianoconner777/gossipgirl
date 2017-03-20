@@ -1,9 +1,26 @@
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 
+
 var app = module.exports = loopback();
+var es = require('event-stream');
+const notifier = require('node-notifier');
+const path = require('path');
+
+app.use(loopback.static(path.resolve(__dirname, './client')));
+app.set('view engine', 'ejs');
 
 app.start = function() {
+
+  var product = app.models.product;
+
+  product.createChangeStream(function(err, changes) {
+    changes.pipe(es.stringify());
+  });
+
+
+
+
   // start the web server
   return app.listen(function() {
     app.emit('started');
